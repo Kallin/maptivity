@@ -1,14 +1,126 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Maptivity</title>
-  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
-  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
-  <%= csrf_meta_tags %>
+    <title>Maptivity</title>
+    <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
+    <style type="text/css">
+            /*.google-map-canvas, .google-map-canvas * { .box-sizing(content-box); }*/
+
+            /* Optional responsive image override */
+
+
+    </style>
+    <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+    <!--<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBbzxZflhNcviymo00GFRAAmyXZCqoGap8&sensor=true&libraries=drawing"></script>-->
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBbzxZflhNcviymo00GFRAAmyXZCqoGap8&sensor=true"></script>
+    <script type="text/javascript">
+
+        // This example adds hide() and show() methods to a custom overlay's prototype.
+        // These methods toggle the visibility of the container <div>.
+        // Additionally, we add a toggleDOM() method, which attaches or detaches the
+        // overlay to or from the map.
+
+        var overlay;
+
+        google.maps.visualRefresh = true;
+        var map;
+        var overlay;
+
+        CourtOverlay.prototype = new google.maps.OverlayView();
+        function initialize() {
+            var mapOptions = {
+                zoom: 19,
+                center: new google.maps.LatLng(37.8012, -122.42),
+                mapTypeId: google.maps.MapTypeId.HYBRID,
+                tilt: 0
+            };
+            map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+
+            var swBound = new google.maps.LatLng(62.281819, -150.287132);
+            var neBound = new google.maps.LatLng(62.400471, -150.005608);
+            var bounds = new google.maps.LatLngBounds(swBound, neBound);
+
+
+
+            overlay = new CourtOverlay(bounds, map);
+        }
+
+        /** @constructor */
+        function CourtOverlay(bounds, map) {
+
+            // Now initialize all properties.
+            this.bounds_ = bounds;
+            this.map_ = map;
+
+            // Define a property to hold the image's div. We'll
+            // actually create this div upon receipt of the onAdd()
+            // method so we'll leave it null for now.
+            this.div_ = null;
+
+            // Explicitly call setMap on this overlay
+            this.setMap(map);
+        }
+
+        /**
+         * onAdd is called when the map's panes are ready and the overlay has been
+         * added to the map.
+         */
+        CourtOverlay.prototype.onAdd = function() {
+
+            var div = document.createElement('div');
+            div.style.border = 'none';
+            div.style.borderWidth = '0px';
+            div.style.position = 'absolute';
+
+            // Create the img element and attach it to the div.
+            var img = document.createElement('img');
+            img.src = "http://www.expert-tennis-tips.com/image-files/tenniscourtdimensions.gif";
+            img.style.width = '100%';
+            img.style.height = '100%';
+            div.appendChild(img);
+
+            this.div_ = div;
+
+            // Add the element to the "overlayImage" pane.
+            var panes = this.getPanes();
+            panes.overlayImage.appendChild(this.div_);
+        };
+
+        CourtOverlay.prototype.draw = function() {
+
+            // We use the south-west and north-east
+            // coordinates of the overlay to peg it to the correct position and size.
+            // To do this, we need to retrieve the projection from the overlay.
+            var overlayProjection = this.getProjection();
+
+            // Retrieve the south-west and north-east coordinates of this overlay
+            // in LatLngs and convert them to pixel coordinates.
+            // We'll use these coordinates to resize the div.
+            var center = overlayProjection.fromLatLngToDivPixel(new google.maps.LatLng(37.8012, -122.42));
+            //var ne = overlayProjection.fromLatLngToDivPixel(this.bounds_.getNorthEast());
+
+            // Resize the image's div to fit the indicated dimensions.
+            var div = this.div_;
+            div.style.left = center.x + 'px';
+            div.style.top = center.y + 'px';
+            div.style.width = 100 + 'px';
+            div.style.height = 100 + 'px';
+        };
+
+
+        google.maps.event.addDomListener(window, 'load', initialize);
+
+
+
+
+    </script>
+    <%= csrf_meta_tags %>
 </head>
 <body>
 
 <%= yield %>
+
 
 </body>
 </html>

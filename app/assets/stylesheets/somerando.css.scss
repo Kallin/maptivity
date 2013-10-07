@@ -1,0 +1,12 @@
+// avoid conflict between bootstrap and google map
+.google-map-canvas {
+  img {
+    max-width: none;
+  }
+}
+
+html, body, #map-canvas {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
