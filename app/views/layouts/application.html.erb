@@ -12,7 +12,7 @@
     </style>
     <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
     <!--<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBbzxZflhNcviymo00GFRAAmyXZCqoGap8&sensor=true&libraries=drawing"></script>-->
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBbzxZflhNcviymo00GFRAAmyXZCqoGap8&sensor=true"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBbzxZflhNcviymo00GFRAAmyXZCqoGap8&sensor=true&libraries=geometry"></script>
     <script type="text/javascript">
 
         // This example adds hide() and show() methods to a custom overlay's prototype.
@@ -42,7 +42,6 @@
             var bounds = new google.maps.LatLngBounds(swBound, neBound);
 
 
-
             overlay = new CourtOverlay(bounds, map);
         }
 
@@ -57,6 +56,7 @@
             // actually create this div upon receipt of the onAdd()
             // method so we'll leave it null for now.
             this.div_ = null;
+            this.paper_ = null;
 
             // Explicitly call setMap on this overlay
             this.setMap(map);
@@ -66,7 +66,7 @@
          * onAdd is called when the map's panes are ready and the overlay has been
          * added to the map.
          */
-        CourtOverlay.prototype.onAdd = function() {
+        CourtOverlay.prototype.onAdd = function () {
 
             var div = document.createElement('div');
             div.style.border = 'none';
@@ -74,11 +74,15 @@
             div.style.position = 'absolute';
 
             // Create the img element and attach it to the div.
-            var img = document.createElement('img');
-            img.src = "http://www.expert-tennis-tips.com/image-files/tenniscourtdimensions.gif";
-            img.style.width = '100%';
-            img.style.height = '100%';
-            div.appendChild(img);
+//            var img = document.createElement('img');
+//            img.src = "http://www.expert-tennis-tips.com/image-files/tenniscourtdimensions.gif";
+//            img.style.width = '100%';
+//            img.style.height = '100%';
+//            div.appendChild(img);
+
+            var paper = new Raphael(div);
+            this.paper_ = paper;
+
 
             this.div_ = div;
 
@@ -87,31 +91,58 @@
             panes.overlayImage.appendChild(this.div_);
         };
 
-        CourtOverlay.prototype.draw = function() {
+        CourtOverlay.prototype.draw = function () {
 
-            // We use the south-west and north-east
-            // coordinates of the overlay to peg it to the correct position and size.
-            // To do this, we need to retrieve the projection from the overlay.
+
+            // official court measurements in feet
+            // 1 foot = 0.3048 meters
+            var width = 36 * 0.3048;
+            var height = 78 * 0.3048;
+
+
+
+
             var overlayProjection = this.getProjection();
+            var latLongCourtCenter = new google.maps.LatLng(37.801589, -122.420066);
+            var courtCenter = overlayProjection.fromLatLngToDivPixel(latLongCourtCenter);
 
-            // Retrieve the south-west and north-east coordinates of this overlay
-            // in LatLngs and convert them to pixel coordinates.
-            // We'll use these coordinates to resize the div.
-            var center = overlayProjection.fromLatLngToDivPixel(new google.maps.LatLng(37.8012, -122.42));
-            //var ne = overlayProjection.fromLatLngToDivPixel(this.bounds_.getNorthEast());
+            var courtWidthLatLon = google.maps.geometry.spherical.computeOffset(latLongCourtCenter, width, 90);
+            var courtHeightLatLon = google.maps.geometry.spherical.computeOffset(latLongCourtCenter, height, 90);
+
+
+            var courtXlat;
+            var courtYlon;
+
+
+            // WHERE DID IT GO??
+            courtXlat = google.maps.geometry.spherical.computeOffset(latLongCourtCenter, width / 2, 270);
+            courtYlon = google.maps.geometry.spherical.computeOffset(latLongCourtCenter, height / 2, 0);
+
+
+            var courtX = overlayProjection.fromLatLngToDivPixel(courtXlat).x
+            var courtY = overlayProjection.fromLatLngToDivPixel(courtYlon).y
+
+            var courtWidthX = overlayProjection.fromLatLngToDivPixel(courtWidthLatLon).x - courtCenter.x
+            var courtHeightY = overlayProjection.fromLatLngToDivPixel(courtHeightLatLon).x - courtCenter.x
+
+
+
+            var rect = this.paper_.rect(10, 10, courtWidthX, courtHeightY);
+            rect.attr ("stroke", "#0000FF");
+            rect.transform("r-8");
+
+
 
             // Resize the image's div to fit the indicated dimensions.
             var div = this.div_;
-            div.style.left = center.x + 'px';
-            div.style.top = center.y + 'px';
+            div.style.left = courtX + 'px';
+            div.style.top = courtY + 'px';
             div.style.width = 100 + 'px';
             div.style.height = 100 + 'px';
         };
 
 
         google.maps.event.addDomListener(window, 'load', initialize);
-
-
 
 
     </script>
