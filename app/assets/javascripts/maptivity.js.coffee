@@ -3,44 +3,66 @@ $ ->
   Maptivity.initialize()
 
 initClasses = ->
+  google.maps.visualRefresh = true;
   google.maps.event.addDomListener(window, 'load', initMaps);
 
-  console.log('initing!')
 
   class TennisCourtOverlay extends google.maps.OverlayView
     constructor: (@bounds, @map) ->
       console.log("i'm getting constructed yo!")
-      @div_ = null
-      @paper_ = null
+      @div = null
+      @paper = null
       @setMap(@map)
 
     onAdd: ->
       console.log("i'm getting added yo!")
       div = document.createElement('div')
-      div.style.border = 'none';
-      div.style.borderWidth = '0px';
       div.style.position = 'absolute';
       div.className = "someclass";
-      @div_=div
 
-      panes = @getPanes()
-      panes.overlayImage.appendChild(@div_)
+      @getPanes().overlayLayer.className = 'overlay-layer'
+      @getPanes().overlayLayer.appendChild(div)
+
+      @div=div
+
+
+      console.log("i'm getting removed")
+    onRemove: ->
+#      @div.parentNode.removeChild(@div);
+#      @div = null;
 
     draw: ->
-      console.log("time to draw, bitch!")
-      if (@paper_)
-        @paper.clear
 
       map = $("#map-canvas")
-      @paper_ = new Raphael(@div_, map.width(), map.height());
+
+      overlayProjection = @getProjection();
+
+
+      # adjusts the div in the overlay, but then drawing on it is messed
+
+      console.log('drawing')
+
+      bounds = @getMap().getBounds()
+      sw = overlayProjection.fromLatLngToDivPixel(bounds.getSouthWest());
+      ne = overlayProjection.fromLatLngToDivPixel(bounds.getNorthEast());
+      @div.style.left = sw.x + 'px';
+      @div.style.top = ne.y + 'px';
+      @div.style.width = (ne.x - sw.x) + 'px';
+      @div.style.height = (sw.y - ne.y) + 'px';
+
+
+      if (!@paper)
+        @paper = new Raphael(@div, map.width(), map.height());
+
+      @paper.clear()
 
       court1Center = new google.maps.LatLng(37.801534, -122.420358);
       court2Center = new google.maps.LatLng(37.801553, -122.420211);
       court3Center = new google.maps.LatLng(37.801571, -122.420042);
-      court4Center = new google.maps.LatLng(37.801590, -122.419892);
+      court4Center = new google.maps.LatLng(37.801588, -122.419892);
 
 
-      overlayProjection = this.getProjection();
+
 
       cornerLatLon = overlayProjection.fromDivPixelToLatLng(new google.maps.Point(0,0));
       offSetLatLon = overlayProjection.fromDivPixelToLatLng(new google.maps.Point(500,0));
@@ -50,12 +72,12 @@ initClasses = ->
       # assuming for the sake of drawing at close range that both x and y pixels represent the same distance per pixel
       metersPerPixel = offsetMeters / 500;
 
-      @drawCourt(@paper_, court1Center, -8, overlayProjection, metersPerPixel);
-      @drawCourt(@paper_, court2Center, -8, overlayProjection, metersPerPixel);
-      @drawCourt(@paper_, court3Center, -8, overlayProjection, metersPerPixel);
-      @drawCourt(@paper_, court4Center, -8, overlayProjection, metersPerPixel);
+      @drawCourt(@paper, court1Center, -8, overlayProjection, metersPerPixel, sw.x, ne.y);
+      @drawCourt(@paper, court2Center, -8, overlayProjection, metersPerPixel, sw.x, ne.y);
+      @drawCourt(@paper, court3Center, -8, overlayProjection, metersPerPixel, sw.x, ne.y);
+      @drawCourt(@paper, court4Center, -8, overlayProjection, metersPerPixel, sw.x, ne.y);
 
-    drawCourt: (paper, centerLatLon, rotation, overlayProjection, metersPerPixel) ->
+    drawCourt: (paper, centerLatLon, rotation, overlayProjection, metersPerPixel, xoffset, yoffset) ->
       # official court measurements are in feet, but we want meters
       # 1 foot = 0.3048 meters
       width = 36 * 0.3048;
@@ -68,14 +90,12 @@ initClasses = ->
       centerPoint = overlayProjection.fromLatLngToDivPixel(centerLatLon);
       topLeftCornerPoint = new google.maps.Point(centerPoint.x - (width / 2 / metersPerPixel), centerPoint.y - (height / 2 / metersPerPixel));
 
-      rect = paper.rect(topLeftCornerPoint.x, topLeftCornerPoint.y, pixelWidth, pixelHeight);
+      rect = paper.rect(topLeftCornerPoint.x - xoffset, topLeftCornerPoint.y - yoffset, pixelWidth, pixelHeight);
       rect.attr("stroke", "#0000FF")
       rect.transform("r-8");
 
-
-
-
   window.TennisCourtOverlay = TennisCourtOverlay
+
 
 
 initMaps = ->
@@ -95,7 +115,13 @@ initMaps = ->
   neBound = new google.maps.LatLng(62.400471, -150.005608);
   bounds = new google.maps.LatLngBounds(swBound, neBound);
 
-  new TennisCourtOverlay bounds, map
+  window.myOverlay = new TennisCourtOverlay bounds, map
+
+  google.maps.event.addListener map, "idle", ->
+   window.myOverlay.draw();
+
+
+
 
 
 window.Maptivity =

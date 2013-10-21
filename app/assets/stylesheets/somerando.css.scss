@@ -5,8 +5,28 @@
   }
 }
 
-html, body, #map-canvas {
-  margin: 0;
+//
+//html, body, #map-canvas {
+//  margin: 0;
+//  padding: 0;
+//  height: 100%;
+//}
+
+#map-canvas {
+  margin: 50px;
   padding: 0;
-  height: 100%;
+  height: 400px;
+  width: 500px;
 }
+
+//.someclass {
+//  border: solid;
+//  border-color: red;
+//  width: 100%;
+//  height: 100%;
+//}
+//
+//.overlay-layer {
+//  border: solid;
+//  border-color: blue;
+//}
