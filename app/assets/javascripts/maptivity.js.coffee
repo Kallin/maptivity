@@ -7,7 +7,8 @@ initClasses = ->
   google.maps.event.addDomListener(window, 'load', initMaps);
 
 
-  class TennisCourtOverlay extends google.maps.OverlayView
+#  class window.TennisCourtOverlay extends google.maps.OverlayView
+  class @TennisCourtOverlay extends google.maps.OverlayView
     constructor: (@bounds, @map) ->
       console.log("i'm getting constructed yo!")
       @div = null
@@ -39,7 +40,6 @@ initClasses = ->
 
 
       # adjusts the div in the overlay, but then drawing on it is messed
-
       console.log('drawing')
 
       bounds = @getMap().getBounds()
@@ -50,19 +50,17 @@ initClasses = ->
       @div.style.width = (ne.x - sw.x) + 'px';
       @div.style.height = (sw.y - ne.y) + 'px';
 
-
       if (!@paper)
         @paper = new Raphael(@div, map.width(), map.height());
 
       @paper.clear()
 
+      @paper.setViewBox(sw.x, ne.y, map.width(), map.height())
+
       court1Center = new google.maps.LatLng(37.801534, -122.420358);
       court2Center = new google.maps.LatLng(37.801553, -122.420211);
       court3Center = new google.maps.LatLng(37.801571, -122.420042);
       court4Center = new google.maps.LatLng(37.801588, -122.419892);
-
-
-
 
       cornerLatLon = overlayProjection.fromDivPixelToLatLng(new google.maps.Point(0,0));
       offSetLatLon = overlayProjection.fromDivPixelToLatLng(new google.maps.Point(500,0));
@@ -71,36 +69,13 @@ initClasses = ->
       offsetMeters = google.maps.geometry.spherical.computeDistanceBetween(cornerLatLon, offSetLatLon);
       # assuming for the sake of drawing at close range that both x and y pixels represent the same distance per pixel
       metersPerPixel = offsetMeters / 500;
-
-      @drawCourt(@paper, court1Center, -8, overlayProjection, metersPerPixel, sw.x, ne.y);
-      @drawCourt(@paper, court2Center, -8, overlayProjection, metersPerPixel, sw.x, ne.y);
-      @drawCourt(@paper, court3Center, -8, overlayProjection, metersPerPixel, sw.x, ne.y);
-      @drawCourt(@paper, court4Center, -8, overlayProjection, metersPerPixel, sw.x, ne.y);
-
-    drawCourt: (paper, centerLatLon, rotation, overlayProjection, metersPerPixel, xoffset, yoffset) ->
-      # official court measurements are in feet, but we want meters
-      # 1 foot = 0.3048 meters
-      width = 36 * 0.3048;
-      height = 78 * 0.3048;
-
-
-      pixelWidth = width / metersPerPixel;
-      pixelHeight = height / metersPerPixel;
-
-      centerPoint = overlayProjection.fromLatLngToDivPixel(centerLatLon);
-      topLeftCornerPoint = new google.maps.Point(centerPoint.x - (width / 2 / metersPerPixel), centerPoint.y - (height / 2 / metersPerPixel));
-
-      rect = paper.rect(topLeftCornerPoint.x - xoffset, topLeftCornerPoint.y - yoffset, pixelWidth, pixelHeight);
-      rect.attr("stroke", "#0000FF")
-      rect.transform("r-8");
-
-  window.TennisCourtOverlay = TennisCourtOverlay
-
-
+      new TennisCourt(@paper, court1Center, -8, overlayProjection, metersPerPixel).paint()
+      new TennisCourt(@paper, court2Center, -8, overlayProjection, metersPerPixel).paint()
+      new TennisCourt(@paper, court3Center, -8, overlayProjection, metersPerPixel).paint()
+      new TennisCourt(@paper, court4Center, -8, overlayProjection, metersPerPixel).paint()
 
 initMaps = ->
   console.log('inittting maps')
-
 
   mapOptions =
     zoom: 19
@@ -117,7 +92,7 @@ initMaps = ->
 
   window.myOverlay = new TennisCourtOverlay bounds, map
 
-  google.maps.event.addListener map, "idle", ->
+  google.maps.event.addListener map, "bound", ->
    window.myOverlay.draw();
 
 
