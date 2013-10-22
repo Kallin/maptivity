@@ -3,23 +3,13 @@
 <head>
     <title>Maptivity</title>
     <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
-    <style type="text/css">
-            /*.google-map-canvas, .google-map-canvas * { .box-sizing(content-box); }*/
-
-            /* Optional responsive image override */
-
-
-    </style>
-    <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
-    <!--<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBbzxZflhNcviymo00GFRAAmyXZCqoGap8&sensor=true&libraries=drawing"></script>-->
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBbzxZflhNcviymo00GFRAAmyXZCqoGap8&sensor=true&libraries=geometry"></script>
-
+    <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
     <%= csrf_meta_tags %>
 </head>
 <body>
 
 <%= yield %>
-
 
 </body>
 </html>
