@@ -1,5 +1,5 @@
 class @ActivityOverlayView extends google.maps.OverlayView
-  constructor: (@bounds, @map) ->
+  constructor: (@map) ->
     console.log("i'm getting constructed yo!")
     @div = null
     @paper = null
@@ -27,10 +27,6 @@ class @ActivityOverlayView extends google.maps.OverlayView
 
     overlayProjection = @getProjection();
 
-
-    # adjusts the div in the overlay, but then drawing on it is messed
-    console.log('drawing')
-
     bounds = @getMap().getBounds()
     sw = overlayProjection.fromLatLngToDivPixel(bounds.getSouthWest());
     ne = overlayProjection.fromLatLngToDivPixel(bounds.getNorthEast());
@@ -46,20 +42,24 @@ class @ActivityOverlayView extends google.maps.OverlayView
 
     @paper.setViewBox(sw.x, ne.y, map.width(), map.height())
 
-    court1Center = overlayProjection.fromLatLngToDivPixel(new google.maps.LatLng(37.801534, -122.420358))
-    court2Center = overlayProjection.fromLatLngToDivPixel(new google.maps.LatLng(37.801553, -122.420211))
-    court3Center = overlayProjection.fromLatLngToDivPixel(new google.maps.LatLng(37.801571, -122.420042))
+    court1Center = overlayProjection.fromLatLngToDivPixel(new google.maps.LatLng(37.801532, -122.420358))
+    court2Center = overlayProjection.fromLatLngToDivPixel(new google.maps.LatLng(37.801549, -122.420209))
+    court3Center = overlayProjection.fromLatLngToDivPixel(new google.maps.LatLng(37.801569, -122.420041))
     court4Center = overlayProjection.fromLatLngToDivPixel(new google.maps.LatLng(37.801588, -122.419892))
 
     cornerLatLon = overlayProjection.fromDivPixelToLatLng(new google.maps.Point(0, 0));
-    offSetLatLon = overlayProjection.fromDivPixelToLatLng(new google.maps.Point(500, 0));
+    offSetLatLon = overlayProjection.fromDivPixelToLatLng(new google.maps.Point(10000, 0));
 
     # now figure out meter distance of 500 pixels based on long difference
     offsetMeters = google.maps.geometry.spherical.computeDistanceBetween(cornerLatLon, offSetLatLon);
     # assuming for the sake of drawing at close range that both x and y pixels represent the same distance per pixel
-    metersPerPixel = offsetMeters / 500;
+    metersPerPixel = offsetMeters / 10000;
 
     new TennisCourt(@paper, court1Center, -8, metersPerPixel).paint()
-    new TennisCourt(@paper, court2Center, -8, metersPerPixel).paint()
-    new TennisCourt(@paper, court3Center, -8, metersPerPixel).paint()
+    court2 = new TennisCourt(@paper, court2Center, -8, metersPerPixel)
+    court2.setDoubles(true)
+    court2.paint()
+    court3 = new TennisCourt(@paper, court3Center, -8, metersPerPixel)
+    court3.setDoubles(true)
+    court3.paint()
     new TennisCourt(@paper, court4Center, -8, metersPerPixel).paint()

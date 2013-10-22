@@ -9,18 +9,14 @@ initMap = ->
 initMaps = ->
 
   mapOptions =
-    zoom: 19
-    center: new google.maps.LatLng(37.8012, -122.42)
+    zoom: 20
+    center: new google.maps.LatLng(37.801571, -122.420042)
     mapTypeId: google.maps.MapTypeId.HYBRID
     tilt: 0
 
   map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
-  swBound = new google.maps.LatLng(62.281819, -150.287132);
-  neBound = new google.maps.LatLng(62.400471, -150.005608);
-  bounds = new google.maps.LatLngBounds(swBound, neBound);
-
-  window.myOverlay = new ActivityOverlayView bounds, map
+  window.myOverlay = new ActivityOverlayView map
 
   google.maps.event.addListener map, "idle", ->
     window.myOverlay.draw();
