@@ -7,10 +7,9 @@ initMap = ->
   google.maps.event.addDomListener(window, 'load', initMaps);
 
 initMaps = ->
-
   mapOptions =
     zoom: 20
-    center: new google.maps.LatLng(37.801571, -122.420042)
+    center: new google.maps.LatLng(37.751945, -122.465105)
     mapTypeId: google.maps.MapTypeId.HYBRID
     tilt: 0
 

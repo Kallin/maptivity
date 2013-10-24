@@ -42,10 +42,16 @@ class @ActivityOverlayView extends google.maps.OverlayView
 
     @paper.setViewBox(sw.x, ne.y, map.width(), map.height())
 
+    # alice marble
     court1Center = overlayProjection.fromLatLngToDivPixel(new google.maps.LatLng(37.801532, -122.420358))
     court2Center = overlayProjection.fromLatLngToDivPixel(new google.maps.LatLng(37.801549, -122.420209))
     court3Center = overlayProjection.fromLatLngToDivPixel(new google.maps.LatLng(37.801569, -122.420041))
     court4Center = overlayProjection.fromLatLngToDivPixel(new google.maps.LatLng(37.801588, -122.419892))
+
+    # jp murphy
+    court5Center = overlayProjection.fromLatLngToDivPixel(new google.maps.LatLng(37.751935, -122.465202))
+    court6Center = overlayProjection.fromLatLngToDivPixel(new google.maps.LatLng(37.751948, -122.465025))
+    court7Center = overlayProjection.fromLatLngToDivPixel(new google.maps.LatLng(37.751955, -122.464867))
 
     cornerLatLon = overlayProjection.fromDivPixelToLatLng(new google.maps.Point(0, 0));
     offSetLatLon = overlayProjection.fromDivPixelToLatLng(new google.maps.Point(10000, 0));
@@ -55,11 +61,22 @@ class @ActivityOverlayView extends google.maps.OverlayView
     # assuming for the sake of drawing at close range that both x and y pixels represent the same distance per pixel
     metersPerPixel = offsetMeters / 10000;
 
-    new TennisCourt(@paper, court1Center, -8, metersPerPixel).paint()
-    court2 = new TennisCourt(@paper, court2Center, -8, metersPerPixel)
+    new TennisCourt(@paper, court1Center, -8.5, metersPerPixel, @getMap().getZoom()).paint()
+    court2 = new TennisCourt(@paper, court2Center, -8.5, metersPerPixel, @getMap().getZoom())
     court2.setDoubles(true)
     court2.paint()
-    court3 = new TennisCourt(@paper, court3Center, -8, metersPerPixel)
+    court3 = new TennisCourt(@paper, court3Center, -8.5, metersPerPixel, @getMap().getZoom())
     court3.setDoubles(true)
     court3.paint()
-    new TennisCourt(@paper, court4Center, -8, metersPerPixel).paint()
+    new TennisCourt(@paper, court4Center, -8.5, metersPerPixel, @getMap().getZoom()).paint()
+
+    court5 = new TennisCourt(@paper, court5Center, -3.7, metersPerPixel, @getMap().getZoom())
+    court5.setDoubles(true)
+    court5.paint()
+    court6 = new TennisCourt(@paper, court6Center, -3, metersPerPixel, @getMap().getZoom())
+    court6.setDoubles(true)
+    court6.paint()
+    court7 = new TennisCourt(@paper, court7Center, -3, metersPerPixel, @getMap().getZoom())
+    court7.setDoubles(true)
+    court7.paint()
+
