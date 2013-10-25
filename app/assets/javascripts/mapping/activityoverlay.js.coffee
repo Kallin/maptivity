@@ -53,6 +53,8 @@ class @ActivityOverlayView extends google.maps.OverlayView
     court6Center = overlayProjection.fromLatLngToDivPixel(new google.maps.LatLng(37.751948, -122.465025))
     court7Center = overlayProjection.fromLatLngToDivPixel(new google.maps.LatLng(37.751955, -122.464867))
 
+    pitch1Center = overlayProjection.fromLatLngToDivPixel(new google.maps.LatLng(37.801588, -122.419892))
+
     cornerLatLon = overlayProjection.fromDivPixelToLatLng(new google.maps.Point(0, 0));
     offSetLatLon = overlayProjection.fromDivPixelToLatLng(new google.maps.Point(10000, 0));
 
@@ -79,4 +81,6 @@ class @ActivityOverlayView extends google.maps.OverlayView
     court7 = new TennisCourt(@paper, court7Center, -3, metersPerPixel, @getMap().getZoom())
     court7.setDoubles(true)
     court7.paint()
+
+    #new SoccerPitch(@paper, pitch1Center, -3, metersPerPixel, @getMap().getZoom()).paint()
 

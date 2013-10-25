@@ -1,5 +1,5 @@
-class @TennisCourt
-  constructor: (@paper, @centerPoint, @rotation, @metersPerPixel, @zoom) ->
+class @TennisCourt extends Shape
+
 
   setDoubles: (@isDoubles) ->
 
@@ -35,6 +35,5 @@ class @TennisCourt
     lines.attr("fill", "#00FF00")
     lines.transform("r#{@rotation},#{@centerPoint.x},#{@centerPoint.y}")
 
-  metersToPixels: (meters) ->
-    return meters / @metersPerPixel
+
 
