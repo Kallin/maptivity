@@ -42,16 +42,15 @@ class @ActivityOverlayView extends google.maps.OverlayView
 
     @paper.setViewBox(sw.x, ne.y, map.width(), map.height())
 
-    # alice marble
-    court1Center = overlayProjection.fromLatLngToDivPixel(new google.maps.LatLng(37.801532, -122.420358))
-    court2Center = overlayProjection.fromLatLngToDivPixel(new google.maps.LatLng(37.801549, -122.420209))
-    court3Center = overlayProjection.fromLatLngToDivPixel(new google.maps.LatLng(37.801569, -122.420041))
-    court4Center = overlayProjection.fromLatLngToDivPixel(new google.maps.LatLng(37.801588, -122.419892))
-
-    # jp murphy
-    court5Center = overlayProjection.fromLatLngToDivPixel(new google.maps.LatLng(37.751935, -122.465202))
-    court6Center = overlayProjection.fromLatLngToDivPixel(new google.maps.LatLng(37.751948, -122.465025))
-    court7Center = overlayProjection.fromLatLngToDivPixel(new google.maps.LatLng(37.751955, -122.464867))
+    courts = [
+      {centerLat: 37.801532, centerLon: -122.420358, rotation: -8.5, doubles: false},
+      {centerLat: 37.801549, centerLon: -122.420209, rotation: -8.5, doubles: true},
+      {centerLat: 37.801569, centerLon: -122.420041, rotation: -8.5, doubles: true},
+      {centerLat: 37.801588, centerLon: -122.419892, rotation: -8.5, doubles: false},
+      {centerLat: 37.751935, centerLon: -122.465202, rotation: -3.7, doubles: true},
+      {centerLat: 37.751948, centerLon: -122.465025, rotation: -3, doubles: true},
+      {centerLat: 37.751955, centerLon: -122.464867, rotation: -3, doubles: true}
+    ]
 
     pitch1Center = overlayProjection.fromLatLngToDivPixel(new google.maps.LatLng(37.804855, -122.42437))
 
@@ -63,24 +62,12 @@ class @ActivityOverlayView extends google.maps.OverlayView
     # assuming for the sake of drawing at close range that both x and y pixels represent the same distance per pixel
     metersPerPixel = offsetMeters / 10000;
 
-    new TennisCourt(@paper, court1Center, -8.5, metersPerPixel, @getMap().getZoom()).paint()
-    court2 = new TennisCourt(@paper, court2Center, -8.5, metersPerPixel, @getMap().getZoom())
-    court2.setDoubles(true)
-    court2.paint()
-    court3 = new TennisCourt(@paper, court3Center, -8.5, metersPerPixel, @getMap().getZoom())
-    court3.setDoubles(true)
-    court3.paint()
-    new TennisCourt(@paper, court4Center, -8.5, metersPerPixel, @getMap().getZoom()).paint()
-
-    court5 = new TennisCourt(@paper, court5Center, -3.7, metersPerPixel, @getMap().getZoom())
-    court5.setDoubles(true)
-    court5.paint()
-    court6 = new TennisCourt(@paper, court6Center, -3, metersPerPixel, @getMap().getZoom())
-    court6.setDoubles(true)
-    court6.paint()
-    court7 = new TennisCourt(@paper, court7Center, -3, metersPerPixel, @getMap().getZoom())
-    court7.setDoubles(true)
-    court7.paint()
+    @paintCourt(court, metersPerPixel) for court in courts
 
     new SoccerPitch(@paper, pitch1Center, 81, metersPerPixel, @getMap().getZoom()).paint()
 
+  paintCourt:(courtData, metersPerPixel) ->
+    centerPoint = @getProjection().fromLatLngToDivPixel(new google.maps.LatLng(courtData.centerLat, courtData.centerLon))
+    court = new TennisCourt(@paper, centerPoint, courtData.rotation, metersPerPixel, @getMap().getZoom())
+    court.setDoubles(courtData.doubles)
+    court.paint()
