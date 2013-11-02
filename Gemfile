@@ -45,3 +45,8 @@ gem 'backbone-on-rails'
 gem 'bootstrap-sass'
 
 gem 'rails_12factor', group: :production
+
+group :development, :test do
+  gem 'jasmine-core', github: 'pivotal/jasmine'
+  gem 'jasmine', github: 'pivotal/jasmine-gem'
+end

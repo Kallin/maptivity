@@ -1,3 +1,19 @@
+GIT
+  remote: git://github.com/pivotal/jasmine-gem.git
+  revision: 1ae33981c2e9b22a078961e657257315acc2c92a
+  specs:
+    jasmine (2.0.0.rc5)
+      jasmine-core (~> 2.0.0.rc5)
+      phantomjs
+      rack (>= 1.2.1)
+      rake
+
+GIT
+  remote: git://github.com/pivotal/jasmine.git
+  revision: 6e07dccb6883c6707cd358baaffea75eae6c17c9
+  specs:
+    jasmine-core (2.0.0.rc5)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -65,6 +81,7 @@ GEM
     mime-types (1.25)
     minitest (4.7.5)
     multi_json (1.8.0)
+    phantomjs (1.9.2.0)
     polyglot (0.3.3)
     rack (1.5.2)
     rack-test (0.6.2)
@@ -126,6 +143,8 @@ DEPENDENCIES
   backbone-on-rails
   bootstrap-sass
   coffee-rails (~> 4.0.0)
+  jasmine!
+  jasmine-core!
   jbuilder (~> 1.2)
   jquery-rails
   rails (= 4.0.0)

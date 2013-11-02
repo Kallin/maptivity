@@ -20,6 +20,13 @@ initMaps = ->
   google.maps.event.addListener map, "idle", ->
     window.myOverlay.draw();
 
+  google.maps.event.addListener map, "click", (evt) ->
+    latLng = evt.latLng
+    $("#position .lat").text(latLng.lat())
+    $("#position .lng").text(latLng.lng())
+
+
+
 window.Maptivity =
   Models: {}
   Collections: {}
