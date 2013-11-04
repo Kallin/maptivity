@@ -74,6 +74,13 @@ class @ActivityOverlayView extends google.maps.OverlayView
     hanball1Center = overlayProjection.fromLatLngToDivPixel(new google.maps.LatLng(43.66788, -79.41540))
     new HandballCourt(@paper, hanball1Center, -16, metersPerPixel, @getMap().getZoom()).paint()
 
+    hanball1Center = overlayProjection.fromLatLngToDivPixel(new google.maps.LatLng(43.67092829817012, -79.40257340669632))
+    new HandballCourt(@paper, hanball1Center, 164, metersPerPixel, @getMap().getZoom()).paint()
+
+
+
+
+
   paintCourt:(courtData, metersPerPixel) ->
     centerPoint = @getProjection().fromLatLngToDivPixel(new google.maps.LatLng(courtData.centerLat, courtData.centerLon))
     court = new TennisCourt(@paper, centerPoint, courtData.rotation, metersPerPixel, @getMap().getZoom())
