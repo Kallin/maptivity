@@ -8,8 +8,8 @@ initMap = ->
 
 initMaps = ->
   mapOptions =
-    zoom: 20
-    center: new google.maps.LatLng(37.805, -122.424892)
+    zoom: 19
+    center: new google.maps.LatLng(43.668081, -79.415638)
     mapTypeId: google.maps.MapTypeId.HYBRID
     tilt: 0
 

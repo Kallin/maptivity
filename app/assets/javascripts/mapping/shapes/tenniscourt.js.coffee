@@ -1,6 +1,5 @@
 class @TennisCourt extends Shape
 
-
   setDoubles: (@isDoubles) ->
 
   paint: () ->
