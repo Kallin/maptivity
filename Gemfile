@@ -48,6 +48,9 @@ gem 'bootstrap-sass'
 gem 'rails_12factor', group: :production
 
 group :development, :test do
-  gem 'jasmine-core', github: 'pivotal/jasmine'
-  gem 'jasmine', github: 'pivotal/jasmine-gem'
+  gem 'jasminerice', github: 'bradphelan/jasminerice' # Latest release still depends on haml.
+end
+
+group :development do
+  gem 'guard-jasmine'
 end

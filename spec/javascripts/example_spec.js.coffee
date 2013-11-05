@@ -2,25 +2,26 @@ describe "Shape", ->
   it "Should do conversions properly", ->
 
     shape = new Shape()
+
     console.log(shape.metersToPixels(1))
     console.log(shape.feetToPixels(1))
     console.log(shape.yardsToPixels(1))
     console.log(shape.yardsToMeters(1))
     console.log(shape.feetToMeters(1))
     console.log(shape.getCircletoPath(0,0,10))
-    expect(true).toBe(true);
+    expect(shape.feetToMeters(1)).toBe(0.3048);
 
   it 'should be incrementing in value', ->
     counter = 0
     counter++
     expect(counter).toEqual(1)
 
-  it 'the callback should be executed on success', ->
+#  it 'the callback should be executed on success', ->
 
-  #  // `andCallFake()` calls a passed function when a spy
-  #  // has been called
-    spyOn($, 'ajax').callFake (options) ->
-      options.success()
+    #  // `andCallFake()` calls a passed function when a spy
+    #  // has been called
+#    spyOn($, 'ajax').callFake (options) ->
+#      options.success()
 #
 #
 #  // Create a new spy
