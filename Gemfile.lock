@@ -39,7 +39,7 @@ GEM
       ejs
       jquery-rails
       rails (>= 3.1)
-    bootstrap-sass (2.3.2.2)
+    bootstrap-sass (3.0.1.0.rc)
       sass (~> 3.2)
     builder (3.1.4)
     celluloid (0.15.2)
@@ -180,7 +180,7 @@ PLATFORMS
 
 DEPENDENCIES
   backbone-on-rails
-  bootstrap-sass
+  bootstrap-sass (~> 3.0.1.0.rc)
   coffee-rails (~> 4.0.0)
   guard-jasmine
   guard-livereload

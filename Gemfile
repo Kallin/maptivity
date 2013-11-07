@@ -43,7 +43,7 @@ end
 # gem 'debugger', group: [:development, :test]
 
 gem 'backbone-on-rails'
-gem 'bootstrap-sass'
+gem 'bootstrap-sass', '~> 3.0.1.0.rc'
 
 gem 'rails_12factor', group: :production
 
