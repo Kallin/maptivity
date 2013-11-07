@@ -2,6 +2,15 @@ $ ->
   initMap()
   Maptivity.initialize()
 
+window.Maptivity =
+  Models: {}
+  Collections: {}
+  Views: {}
+  Routers: {}
+  initialize: ->
+    Backbone.pubSub = _.extend({}, Backbone.Events);
+    new PositionView()
+
 initMap = ->
   google.maps.visualRefresh = true;
   google.maps.event.addDomListener(window, 'load', initMaps);
@@ -21,17 +30,10 @@ initMaps = ->
     window.myOverlay.draw();
 
   google.maps.event.addListener map, "click", (evt) ->
-    latLng = evt.latLng
-    $("#position .lat").text(latLng.lat())
-    $("#position .lng").text(latLng.lng())
+    Backbone.pubSub.trigger("latLngUpdate", evt.latLng);
 
 
 
-window.Maptivity =
-  Models: {}
-  Collections: {}
-  Views: {}
-  Routers: {}
-  initialize: ->
-    new PositionView()
+
+
 
