@@ -33,5 +33,5 @@ window.Maptivity =
   Views: {}
   Routers: {}
   initialize: ->
-    console.log('Hello from Backbone!')
+    new PositionView()
 

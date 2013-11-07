@@ -47,10 +47,15 @@ gem 'bootstrap-sass'
 
 gem 'rails_12factor', group: :production
 
+gem 'rabl'
+
+gem 'handlebars_assets'
+
 group :development, :test do
   gem 'jasminerice', github: 'bradphelan/jasminerice' # Latest release still depends on haml.
 end
 
 group :development do
   gem 'guard-jasmine'
+  gem 'guard-livereload', require: false
 end

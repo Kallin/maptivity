@@ -60,7 +60,11 @@ GEM
       execjs
     eco-source (1.1.0.rc.1)
     ejs (1.1.1)
+    em-websocket (0.5.0)
+      eventmachine (>= 0.12.9)
+      http_parser.rb (~> 0.5.3)
     erubis (2.7.0)
+    eventmachine (1.0.3)
     execjs (2.0.1)
     ffi (1.9.3)
     formatador (0.2.4)
@@ -76,7 +80,16 @@ GEM
       multi_json
       thor
       tilt
+    guard-livereload (2.0.0)
+      em-websocket (~> 0.5)
+      guard (~> 2.0)
+      multi_json (~> 1.8)
+    handlebars_assets (0.14.1)
+      execjs (>= 1.2.9)
+      sprockets (>= 2.0.3)
+      tilt
     hike (1.2.3)
+    http_parser.rb (0.5.3)
     i18n (0.6.5)
     jbuilder (1.5.1)
       activesupport (>= 3.0.0)
@@ -102,6 +115,8 @@ GEM
       coderay (~> 1.0.5)
       method_source (~> 0.8)
       slop (~> 3.4)
+    rabl (0.9.0)
+      activesupport (>= 2.3.14)
     rack (1.5.2)
     rack-test (0.6.2)
       rack (>= 1.0)
@@ -168,9 +183,12 @@ DEPENDENCIES
   bootstrap-sass
   coffee-rails (~> 4.0.0)
   guard-jasmine
+  guard-livereload
+  handlebars_assets
   jasminerice!
   jbuilder (~> 1.2)
   jquery-rails
+  rabl
   rails (= 4.0.0)
   rails_12factor
   sass-rails (~> 4.0.0)

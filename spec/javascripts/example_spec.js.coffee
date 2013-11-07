@@ -2,14 +2,14 @@ describe "Shape", ->
   it "Should do conversions properly", ->
 
     shape = new Shape()
-
-    console.log(shape.metersToPixels(1))
-    console.log(shape.feetToPixels(1))
-    console.log(shape.yardsToPixels(1))
-    console.log(shape.yardsToMeters(1))
-    console.log(shape.feetToMeters(1))
-    console.log(shape.getCircletoPath(0,0,10))
+#    console.log(shape.metersToPixels(1))
+#    console.log(shape.feetToPixels(1))
+#    console.log(shape.yardsToPixels(1))
+#    console.log(shape.yardsToMeters(1))
+#    console.log(shape.feetToMeters(1))
+#    console.log(shape.getCircletoPath(0,0,10))
     expect(shape.feetToMeters(1)).toBe(0.3048);
+    expect(shape.yardsToMeters(1)).toBe(0.9144);
 
   it 'should be incrementing in value', ->
     counter = 0
