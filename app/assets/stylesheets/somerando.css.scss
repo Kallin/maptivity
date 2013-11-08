@@ -2,14 +2,16 @@ body {
   padding-top: 50px;
 }
 .starter-template {
-  padding: 40px 15px;
   text-align: center;
+}
+
+#position{
+  text-align: right;
 }
 
 
 #map-canvas {
-  margin: 50px;
   padding: 0;
   height: 600px;
-  width: 1000px;
+  width: 100%;
 }

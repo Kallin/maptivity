@@ -1,5 +1,6 @@
 class @PositionView extends Backbone.View
 
+  EMPTY_LATLNG_MESSAGE: "Please Click Somewhere!"
   latLng: null
 
   initialize: ->
@@ -11,13 +12,18 @@ class @PositionView extends Backbone.View
   template: JST["position"]
 
   updateLatLng: (evt) =>
-    console.log('updating latlng!')
-    console.log(evt)
     @latLng = evt
     @render()
 
   render: ->
-    if (@latLng)
-      this.$el.html(@template({lat: @latLng.lat(), lng: @latLng.lng()}));
+
+    if (@latLng?)
+      html = @template({lat: @latLng.lat(), lng: @latLng.lng()})
+    else
+      html = @template({lat: @EMPTY_LATLNG_MESSAGE, lng: @EMPTY_LATLNG_MESSAGE})
+
+    this.$el.html(html);
+
+
 
 

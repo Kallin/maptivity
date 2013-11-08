@@ -10,6 +10,8 @@ window.Maptivity =
   initialize: ->
     Backbone.pubSub = _.extend({}, Backbone.Events);
     new PositionView()
+    collection = new CourtCollection()
+    collection.fetch()
 
 initMap = ->
   google.maps.visualRefresh = true;

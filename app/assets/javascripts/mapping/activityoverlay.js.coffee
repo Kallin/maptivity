@@ -83,6 +83,6 @@ class @ActivityOverlayView extends google.maps.OverlayView
 
   paintCourt:(courtData, metersPerPixel) ->
     centerPoint = @getProjection().fromLatLngToDivPixel(new google.maps.LatLng(courtData.centerLat, courtData.centerLon))
-    court = new TennisCourt(@paper, centerPoint, courtData.rotation, metersPerPixel, @getMap().getZoom())
+    court = new TennisCourtShape(@paper, centerPoint, courtData.rotation, metersPerPixel, @getMap().getZoom())
     court.setDoubles(courtData.doubles)
     court.paint()

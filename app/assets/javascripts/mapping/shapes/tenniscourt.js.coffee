@@ -1,4 +1,4 @@
-class @TennisCourt extends Shape
+class @TennisCourtShape extends Shape
 
   setDoubles: (@isDoubles) ->
 
