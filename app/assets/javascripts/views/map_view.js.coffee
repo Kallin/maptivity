@@ -3,8 +3,6 @@ class @MapView extends Backbone.View
   initialize: ->
     google.maps.visualRefresh = true;
 
-    #  google.maps.event.addDomListener(window, 'load', initMaps);
-
     mapOptions =
       zoom: 19
       center: new google.maps.LatLng(43.668081, -79.415638)
@@ -22,7 +20,7 @@ class @MapView extends Backbone.View
       Backbone.pubSub.trigger("latLngUpdate", evt.latLng);
 
     @collection = new CourtCollection()
-    @collection.fetch({reset: true})
+    @collection.fetch({reset: true, data: {activity: "handball"}})
     @listenTo(@collection, 'reset', @render);
 
   render: ->

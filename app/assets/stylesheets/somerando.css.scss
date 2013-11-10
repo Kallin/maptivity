@@ -1,11 +1,12 @@
 body {
   padding-top: 50px;
 }
+
 .starter-template {
   text-align: center;
 }
 
-#position{
+#position {
   text-align: right;
 }
 
@@ -14,3 +15,23 @@ body {
   height: 600px;
   width: 100%;
 }
+
+@mixin path($color) {
+  fill: $color;
+  stroke: white;
+  stroke-opacity: 1;
+  fill-opacity: 0.3;
+}
+
+.handball-path {
+  @include path(blue);
+}
+
+.tennis-path {
+  @include path(green);
+}
+
+.soccer-path {
+  @include path(red);
+}
+
