@@ -7,9 +7,8 @@ window.Maptivity =
   Views: {}
   Routers: {}
   initialize: ->
-    Backbone.pubSub = _.extend({}, Backbone.Events);
-    new PositionView()
-    new MapView()
+    @Routers.mainRouter = new AppRouter()
+    Backbone.history.start()
 
 
 

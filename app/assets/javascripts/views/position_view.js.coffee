@@ -3,13 +3,13 @@ class @PositionView extends Backbone.View
   EMPTY_LATLNG_MESSAGE: "Please Click Somewhere!"
   latLng: null
 
-  initialize: ->
-    @render()
-    Backbone.pubSub.on('latLngUpdate', @updateLatLng);
-
   el: '#position'
 
   template: JST["position"]
+
+  initialize: ->
+    @render()
+    Backbone.pubSub.on('latLngUpdate', @updateLatLng);
 
   updateLatLng: (evt) =>
     @latLng = evt
