@@ -26,3 +26,5 @@ class @MapView extends Backbone.View
   render: ->
     @myOverlay.setCourts(@collection.models)
     @myOverlay.draw()
+
+    $("#map-canvas").height($(window).height() - $("#position").height() - 100);
