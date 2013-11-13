@@ -1,26 +1,8 @@
-class @AppRouter extends Backbone.Router
+#= require ./controller
+class @MarRouter extends Backbone.Marionette.AppRouter
 
-  initialize: ->
-    Backbone.pubSub = _.extend({}, Backbone.Events);
-
-  routes:
+  appRoutes :
     "activity/:activity": "activity",
     '*path': 'defaultRoute'
 
-  activity: (activity) ->
-    @closeView(@positionView)
-    @closeView(@navView)
-    @closeView(@mapView)
-
-    @positionView = new PositionView()
-    @navView = new NavView()
-    @navView.setActivity(activity)
-    @mapView = new MapView()
-
-  defaultRoute: ->
-    @navigate("activity/tennis", {trigger: true, replace: true})
-
-  closeView: (view) ->
-    if view
-      view.undelegateEvents()
-
+  controller: new MarController()

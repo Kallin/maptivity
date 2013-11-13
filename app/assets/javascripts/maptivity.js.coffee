@@ -1,18 +1,26 @@
 $ ->
-  Maptivity.initialize()
+  MyApp = new Backbone.Marionette.Application();
+  window.MyApp = MyApp
+  MyApp.addRegions({
+    header: 'header',
+    position: 'position',
+    main: 'main'
+  });
 
-window.Maptivity =
-  Models: {}
-  Collections: {}
-  Views: {}
-  Routers: {}
-  initialize: ->
-    @Routers.mainRouter = new AppRouter()
-    Backbone.history.start()
+  MyApp.vent.on 'all', (evt, model) ->
+#    console.log('DEBUG: Event Caught: ' + evt);
+#    if (model)
+#      console.dir(model)
 
+  MyApp.addInitializer ->
+    MyApp.header.show(new HeaderView());
+    MyApp.position.show(new PositionView());
+    MyApp.main.show(new MapView());
 
+    new MarRouter();
+    Backbone.history.start();
 
-
+  MyApp.start();
 
 
 

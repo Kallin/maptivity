@@ -1,4 +1,4 @@
-class @PositionView extends Backbone.View
+class @PositionView extends Backbone.Marionette.ItemView
 
   EMPTY_LATLNG_MESSAGE: "Please Click Somewhere!"
   latLng: null
@@ -8,22 +8,17 @@ class @PositionView extends Backbone.View
   template: JST["position"]
 
   initialize: ->
+    window.MyApp.vent.on 'latlng:update', @updateLatLng
     @render()
-    Backbone.pubSub.on('latLngUpdate', @updateLatLng);
 
   updateLatLng: (evt) =>
     @latLng = evt
     @render()
 
-  render: ->
-
+  serializeData: ->
     if (@latLng?)
-      html = @template({lat: @latLng.lat(), lng: @latLng.lng()})
+      return {lat: @latLng.lat(), lng: @latLng.lng()}
     else
-      html = @template({lat: @EMPTY_LATLNG_MESSAGE, lng: @EMPTY_LATLNG_MESSAGE})
-
-    this.$el.html(html);
-
-
+      return {lat: @EMPTY_LATLNG_MESSAGE, lng: @EMPTY_LATLNG_MESSAGE}
 
 

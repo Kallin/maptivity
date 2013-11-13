@@ -15,6 +15,7 @@
 //= require bootstrap
 //= require underscore
 //= require backbone
+//= require backbone.marionette
 //= require handlebars.runtime
 //= require maptivity
 //= require_tree ../templates

@@ -1,4 +1,4 @@
-class @MapView extends Backbone.View
+class @MapView extends Backbone.Marionette.ItemView
 
   initialize: ->
     google.maps.visualRefresh = true;
@@ -17,7 +17,7 @@ class @MapView extends Backbone.View
       @myOverlay.draw();
 
     google.maps.event.addListener map, "click", (evt) ->
-      Backbone.pubSub.trigger("latLngUpdate", evt.latLng);
+      window.MyApp.vent.trigger('latlng:update', evt.latLng);
 
     @collection = new CourtCollection()
     @collection.fetch({reset: true, data: {activity: "handball"}})
