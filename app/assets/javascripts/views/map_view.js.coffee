@@ -25,6 +25,8 @@ class @MapView extends Backbone.Marionette.ItemView
 
     @listenTo(@collection, 'reset', @render);
 
+    @listenTo(@collection, 'add', @render);
+
     window.MyApp.vent.on 'activity:filter', @updateCollection
 
   render: ->

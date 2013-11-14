@@ -30,7 +30,7 @@ class @ActivityOverlayView extends google.maps.OverlayView
     sw = overlayProjection.fromLatLngToDivPixel(bounds.getSouthWest());
     ne = overlayProjection.fromLatLngToDivPixel(bounds.getNorthEast());
 
-    overDraw = 200
+    overDraw = 200 #TODO: make dependant on screen size
 
     @div.style.left = sw.x - overDraw + 'px';
     @div.style.top = ne.y - overDraw + 'px';
@@ -55,7 +55,6 @@ class @ActivityOverlayView extends google.maps.OverlayView
     switch @activity
       when  'handball' then courtShape = new HandballCourtShape(@paper, centerPoint, courtData.get('rotation'), metersPerPixel, @getMap().getZoom())
       when 'tennis'
-        console.log courtData
         courtShape = new TennisCourtShape(@paper, centerPoint, courtData.get('rotation'), metersPerPixel, @getMap().getZoom())
         courtShape.setDoubles(courtData.get('doubles'))
       when 'soccer' then courtShape = new SoccerPitchShape(@paper, centerPoint, courtData.get('rotation'), metersPerPixel, @getMap().getZoom())
