@@ -15,6 +15,8 @@ class @ActivityOverlayView extends google.maps.OverlayView
 
   setCourts:(@courts) ->
 
+  setActivity:(@activity) ->
+
   draw: ->
     map = $("#map-canvas")
 
@@ -50,6 +52,12 @@ class @ActivityOverlayView extends google.maps.OverlayView
 
   paintCourt:(courtData, metersPerPixel) ->
     centerPoint = @getProjection().fromLatLngToDivPixel(new google.maps.LatLng(courtData.get('lat'), courtData.get('lng')))
-    courtShape = new HandballCourtShape(@paper, centerPoint, courtData.get('rotation'), metersPerPixel, @getMap().getZoom())
-#    courtShape.setDoubles(courtData.get('isDoubles'))
+    switch @activity
+      when  'handball' then courtShape = new HandballCourtShape(@paper, centerPoint, courtData.get('rotation'), metersPerPixel, @getMap().getZoom())
+      when 'tennis'
+        console.log courtData
+        courtShape = new TennisCourtShape(@paper, centerPoint, courtData.get('rotation'), metersPerPixel, @getMap().getZoom())
+        courtShape.setDoubles(courtData.get('doubles'))
+      when 'soccer' then courtShape = new SoccerPitchShape(@paper, centerPoint, courtData.get('rotation'), metersPerPixel, @getMap().getZoom())
+
     courtShape.paint()

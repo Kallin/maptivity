@@ -23,6 +23,8 @@ class @TennisCourtShape extends Shape
 
     lines = @paper.path(courtLines);
 
+    lines.node.setAttribute("class", "tennis-path");
+
     @strokeAndRotate(lines)
 
 
