@@ -34,3 +34,21 @@ body {
   @include path(red);
 }
 
+.mini-modal {
+  .modal-dialog {
+    width: 200px;
+  }
+
+  .modal-header {
+    padding: 5px;
+  }
+
+  .modal-body {
+    padding: 0 10px 0 10px;
+  }
+
+  .modal-footer{
+    padding: 5px;
+  }
+  //width: 400px;
+}

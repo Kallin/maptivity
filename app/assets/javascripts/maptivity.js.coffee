@@ -4,7 +4,8 @@ $ ->
   MyApp.addRegions({
     header: 'header',
     position: 'position',
-    main: 'main'
+    main: 'main',
+    builder: '#builder'
   });
 
   MyApp.vent.on 'all', (evt, model) ->

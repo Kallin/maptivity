@@ -27,6 +27,8 @@ class @MapView extends Backbone.Marionette.ItemView
 
     @listenTo(@collection, 'add', @render);
 
+    @listenTo(@collection, 'change', @render);
+
     window.MyApp.vent.on 'activity:filter', @updateCollection
 
   render: ->
@@ -36,7 +38,7 @@ class @MapView extends Backbone.Marionette.ItemView
       @myOverlay.setCourts(@collection.models)
       @myOverlay.draw()
 
-    $("#map-canvas").height($(window).height() - $("#position").height() - 100);
+    $("#map-canvas").height($(window).height() - $("#position").height() - 100); #TODO: this doesn't belong here
 
   updateCollection: (evt) =>
     @myOverlay.setActivity(evt)
