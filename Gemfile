@@ -53,6 +53,8 @@ gem 'handlebars_assets'
 
 gem 'marionette-rails'
 
+gem 'modernizr-rails'
+
 group :development, :test do
   gem 'jasminerice', github: 'bradphelan/jasminerice' # Latest release still depends on haml.
 end

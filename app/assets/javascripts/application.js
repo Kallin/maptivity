@@ -18,6 +18,7 @@
 //= require backbone.marionette
 //= require handlebars.runtime
 //= require maptivity
+//= require modernizr
 //= require_tree ../templates
 //= require_tree ./models
 //= require_tree ./collections

@@ -111,6 +111,7 @@ GEM
     method_source (0.8.2)
     mime-types (1.25)
     minitest (4.7.5)
+    modernizr-rails (2.6.3)
     multi_json (1.8.0)
     polyglot (0.3.3)
     pry (0.9.12.2)
@@ -191,6 +192,7 @@ DEPENDENCIES
   jbuilder (~> 1.2)
   jquery-rails
   marionette-rails
+  modernizr-rails
   rabl
   rails (= 4.0.0)
   rails_12factor
