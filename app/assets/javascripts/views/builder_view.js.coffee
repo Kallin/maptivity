@@ -4,7 +4,7 @@ class @BuilderView extends Backbone.Marionette.ItemView
 
   onDomRefresh: => # maybe after render?
     $('.modal').modal({backdrop: false}) # todo: activate using EL
-    $('.slider').slider({ max: 360, step: 0.5 })
-    $('.slider').on "slide", (event, ui) =>
-      $(".sliderValue").html(ui.value)
-      window.MyApp.vent.trigger('builder:rotate', ui.value);
+    $('.slider').slider({max:360})
+    $('.slider').on "slide", (event) =>
+      $(".sliderValue").html(event.value)
+      window.MyApp.vent.trigger('builder:rotate', event.value);
